@@ -296,20 +296,21 @@ app.get("/purchaseOrder", async (req, res) => {
   }
 });
 
-app.post("/purchaseOrder", (req, res) => {
-  const newOrder = req.body;
-  sequelize.query(
-    "INSERT INTO Purchasing SET ?",
-    newOrder,
-    (error, results, fields) => {
-      if (error) {
-        console.error("Error inserting purchase order:", error);
-        res.status(500).json({ message: "Internal server error" });
-      } else {
-        res.status(201).json({ message: "Purchase order added successfully" });
+app.post("/purchaseOrder", async (req, res) => {
+  const { customerName, brandName, city, item, category, price, quantity } = req.body;
+  try {
+    await sequelize.query(
+      "INSERT INTO Purchasing (cname, bname, bcity, item, category, price, quantity, pstatus) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')",
+      {
+        replacements: [customerName, brandName, city, item, category, price, quantity],
+        type: sequelize.QueryTypes.INSERT,
       }
-    }
-  );
+    );
+    res.status(201).json({ message: "Purchase order added successfully" });
+  } catch (error) {
+    console.error("Error inserting purchase order:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 app.delete("/purchaseOrder/:id", async (req, res) => {
   const { id } = req.params;
