@@ -1,0 +1,23 @@
+{
+  "name": "supplier-management-server",
+  "version": "1.0.0",
+  "description": "Backend API for Supplier Management System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.5",
+    "sequelize": "^6.37.3"
+  }
+}
