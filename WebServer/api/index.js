@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("pg"); // Force Vercel to bundle the PostgreSQL driver
 
 const express = require("express");
 const morgan = require("morgan");
@@ -14,14 +15,14 @@ const { Sequelize } = require("sequelize");
 
 // DATABASE_URL is set as an environment variable on Render.
 // Locally it falls back to your .env file (see .env.example).
+const isProduction = !!process.env.DATABASE_URL;
+
 const sequelize = new Sequelize(
-  process.env.DATABASE_URL ||
-    "postgres://postgres:Rfvg%4067512@localhost:5432/SupplierManagementDB",
+  process.env.DATABASE_URL || "postgres://localhost:5432/mydb",
   {
     dialect: "postgres",
-    protocol: "postgres",
     dialectOptions: {
-      ssl: process.env.DATABASE_URL
+      ssl: isProduction
         ? { require: true, rejectUnauthorized: false }
         : false,
     },
@@ -97,7 +98,6 @@ app.get("/linkedBrand/:id", async (req, res) => {
     const results = await sequelize.query(
       "SELECT * FROM linkedBrandView WHERE sID = 1",
       {
-        replacements: [id],
         type: sequelize.QueryTypes.SELECT,
       }
     );
@@ -133,7 +133,6 @@ app.get("/customer/:id", async (req, res) => {
     const results = await sequelize.query(
       "SELECT * FROM customerView WHERE sID = 1",
       {
-        replacements: [id],
         type: sequelize.QueryTypes.SELECT,
       }
     );
