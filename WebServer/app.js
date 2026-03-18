@@ -485,7 +485,15 @@ app.get("/priceData", async (req, res) => {
   }
 });
 
+// Root route for testing
+app.get("/", (req, res) => {
+  res.send("<h1>Supplier Management API is running!</h1><p>Try <a href='/brands'>/brands</a></p>");
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+// IMPORTANT FOR VERCEL: Export the app
+module.exports = app;
