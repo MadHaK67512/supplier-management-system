@@ -201,11 +201,12 @@ connectionDB();
 
 
 
-   //BrandStock table Working
+    //BrandStock table Working
     app.get('/brandStock', async (req, res) => {
-    const { id } = req.params;
     try {
-        const results = await sequelize.query('SELECT * FROM BrandStockView');
+        const results = await sequelize.query('SELECT * FROM BrandStockView', {
+            type: sequelize.QueryTypes.SELECT
+        });
         console.log('Brand Stock:', results);
         res.json(results);
     } catch (error) {

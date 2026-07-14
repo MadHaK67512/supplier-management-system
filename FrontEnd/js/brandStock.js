@@ -6,29 +6,30 @@ window.onload = async function() {
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
-        const data = await response.json(); // Array of arrays
+        const data = await response.json();
         
         console.log('BrandStock:', data);
         
         const tbody = document.querySelector('tbody');
         tbody.innerHTML = ''; // Clear existing rows
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No brand stock found.</td></tr>';
+            return;
+        }
         
-        // Iterate over each array of brand objects
-        data.forEach(brandArray => {
-            // Iterate over each brand object in the array
-            brandArray.forEach(data => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td>${data.bname}</td>
-                <td>${data.bcity}</td>
-                <td>${data.item}</td>
-                <td>${data.category}</td>
-                <td>${data.price}</td>
-                <td>${data.quantity}</td>
-                <td><button class="button button-success" onclick="addProduct('${sID}','${data.bname}', '${data.bcity}', '${data.item}', '${data.category}', '${data.price}', '${data.quantity}')">Add</button></td>
-                `;
-                tbody.appendChild(row);
-            });
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${item.bname}</td>
+            <td>${item.bcity}</td>
+            <td>${item.item}</td>
+            <td>${item.category}</td>
+            <td>${item.price}</td>
+            <td>${item.quantity}</td>
+            <td><button class="button button-success" onclick="addProduct('${sID}','${item.bname}', '${item.bcity}', '${item.item}', '${item.category}', '${item.price}', '${item.quantity}')">Add</button></td>
+            `;
+            tbody.appendChild(row);
         });
     } catch (error) {
         console.error('Error fetching data:', error);

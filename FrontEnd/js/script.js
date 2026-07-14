@@ -43,8 +43,7 @@ const initDashboard = async () => {
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
-        const data = await response.json(); // Array of arrays [[orders], [metadata]]
-        const orders = data[0] || [];
+        const orders = await response.json(); // Flat array of order objects
         
         const updatesContainer = document.querySelector('.recent_updates .updates');
         if (updatesContainer) {
