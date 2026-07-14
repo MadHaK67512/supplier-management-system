@@ -12,7 +12,7 @@
   ],
   "routes": [
     {
-      "src": "/(api|customer|linkedBrand|supplierStock|purchaseOrder|customerList|brandsList|citiesList|items|categoryList|priceData|brandStock|linkedbrand)(.*)",
+      "src": "/(api|brands|customer|linkedBrand|supplierStock|purchaseOrder|customerList|brandsList|citiesList|items|categoryList|priceData|brandStock|linkedbrand)(.*)",
       "dest": "WebServer/app.js"
     },
     {
