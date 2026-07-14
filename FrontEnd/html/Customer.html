@@ -118,16 +118,48 @@
           </div>
         </div>
       </main>
+      <!-- Right container start -->
+      <div class="right">
+        <div class="top">
+          <button id="menu_bar">
+            <span class="material-symbols-outlined">menu </span>
+          </button>
+          <div class="theme-toggler">
+            <span class="material-symbols-outlined active">light_mode</span>
+            <span class="material-symbols-outlined"> dark_mode </span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <p><b>Guest</b></p>
+              <p>Admin</p>
+            </div>
+            <div class="profile-photo">
+              <img src="images/profile-1.jpg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right container end -->
     </div>
 
-    <script src="customer.js"></script>
-    <script>
-      // Apply dark mode if it was enabled before
-      const isDarkMode =
-        localStorage.getItem("dark-theme-variables") === "true";
-      if (isDarkMode) {
-        document.body.classList.add("dark-theme-variables");
-      }
-    </script>
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal">
+      <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <span class="close" id="closeProfileModal">&times;</span>
+        <h2 style="margin-bottom: 1.5rem; color: var(--clr-primary);">User Profile</h2>
+        <div class="profile-photo" style="display: inline-block; margin-bottom: 1rem;">
+          <img src="images/profile-1.jpg" alt="Profile" style="width: 6rem; height: 6rem; border-radius: 50%; border: 3px solid var(--clr-primary);" />
+        </div>
+        <div class="profile-details" style="text-align: left; margin-top: 1rem; border-top: 1px solid rgba(132, 139, 200, 0.1); padding-top: 1rem;">
+          <p style="margin-bottom: 0.5rem;"><strong>Username:</strong> <span id="profileUsername">Khan</span></p>
+          <p style="margin-bottom: 0.5rem;"><strong>Role:</strong> <span id="profileRole">Administrator</span></p>
+          <p style="margin-bottom: 0.5rem;"><strong>Database Status:</strong> <span id="profileDb" class="success" style="font-weight: 600;">PostgreSQL Connected</span></p>
+          <p style="margin-bottom: 0.5rem;"><strong>Server Mode:</strong> <span class="primary" style="font-weight: 600;">Node.js / Express</span></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/customer.js"></script>
+    <script src="../js/script.js"></script>
   </body>
 </html>

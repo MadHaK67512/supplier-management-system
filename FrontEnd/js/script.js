@@ -4,26 +4,34 @@ const closeBtn = document.querySelector('#close_btn');
 
 const themeToggler = document.querySelector('.theme-toggler');
 
-menuBtn.addEventListener('click',()=>{
-  sideMenu.classList.add('show');
-})
-closeBtn.addEventListener('click',()=>{
-  sideMenu.classList.remove('show');
-})
+if (menuBtn && sideMenu) {
+  menuBtn.addEventListener('click',()=>{
+    sideMenu.classList.add('show');
+  });
+}
+if (closeBtn && sideMenu) {
+  closeBtn.addEventListener('click',()=>{
+    sideMenu.classList.remove('show');
+  });
+}
 
-themeToggler.addEventListener('click', () => {
-  document.body.classList.toggle('dark-theme-variables');
-  const isDarkMode = document.body.classList.contains('dark-theme-variables');
-  localStorage.setItem('dark-theme-variables', isDarkMode); // Store dark mode preference
-  themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
-  themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
-
-});
-// Apply dark mode if it was enabled before
-const isDarkMode = localStorage.getItem('dark-theme-variables') === 'true';
-if (isDarkMode) {
-  document.body.classList.add('dark-theme-variables');
-  themeToggler.querySelector('span:nth-child(1)').classList.add('active');
+if (themeToggler) {
+  themeToggler.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme-variables');
+    const isDarkMode = document.body.classList.contains('dark-theme-variables');
+    localStorage.setItem('dark-theme-variables', isDarkMode); // Store dark mode preference
+    const toggler1 = themeToggler.querySelector('span:nth-child(1)');
+    const toggler2 = themeToggler.querySelector('span:nth-child(2)');
+    if (toggler1) toggler1.classList.toggle('active');
+    if (toggler2) toggler2.classList.toggle('active');
+  });
+  // Apply dark mode if it was enabled before
+  const isDarkMode = localStorage.getItem('dark-theme-variables') === 'true';
+  if (isDarkMode) {
+    document.body.classList.add('dark-theme-variables');
+    const toggler1 = themeToggler.querySelector('span:nth-child(1)');
+    if (toggler1) toggler1.classList.add('active');
+  }
 }
 
 // Fetch recent orders to show on dashboard updates

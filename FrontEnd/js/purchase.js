@@ -7,32 +7,34 @@ window.onload = async function() {
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
-        const data = await response.json(); // Array of arrays
+        const data = await response.json();
         
         console.log('PurchaseOrder:', data);
         
         const tbody = document.querySelector('tbody');
         tbody.innerHTML = ''; // Clear existing rows
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No purchase orders found.</td></tr>';
+            return;
+        }
         
-        // Iterate over each array of brand objects
-        data.forEach(brandArray => {
-            // Iterate over each brand object in the array
-            brandArray.forEach(data => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td>${data.cname}</td>
-                <td>${data.bname}</td>
-                <td>${data.bcity}</td>
-                <td>${data.item}</td>
-                <td>${data.category}</td>
-                <td>${data.price}</td>
-                <td>${data.quantity}</td>
-                <td>${data.pstatus}</td>
-                <td><button class="button button-success" onclick="markComplete('${data.cid}','${data.bname}', '${data.bcity}', '${data.item}', '${data.category}', '${data.price}', '${data.quantity}')">Completed</button></td>
-                <td><button class="button button-danger" onclick="removeProduct('${data.cid}','${data.bname}', '${data.bcity}', '${data.item}')">Remove</button></td>
-                `;
-                tbody.appendChild(row);
-            });
+        // data is a flat array of purchase order objects
+        data.forEach(order => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${order.cname}</td>
+            <td>${order.bname}</td>
+            <td>${order.bcity}</td>
+            <td>${order.item}</td>
+            <td>${order.category}</td>
+            <td>${order.price}</td>
+            <td>${order.quantity}</td>
+            <td>${order.pstatus}</td>
+            <td><button class="button button-success" onclick="markComplete('${order.cid}','${order.bname}', '${order.bcity}', '${order.item}', '${order.category}', '${order.price}', '${order.quantity}')">Completed</button></td>
+            <td><button class="button button-danger" onclick="removeProduct('${order.cid}','${order.bname}', '${order.bcity}', '${order.item}')">Remove</button></td>
+            `;
+            tbody.appendChild(row);
         });
     } catch (error) {
         console.error('Error fetching data:', error);
