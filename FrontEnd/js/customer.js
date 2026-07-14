@@ -1,7 +1,8 @@
 window.onload = async function() {
     try {
         const sID = localStorage.getItem('sID') || '1';
-        const response = await fetch(`http://localhost:4000/customer/${sID}`);
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/customer/${sID}`);
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
@@ -34,7 +35,8 @@ async function removeCustomer(customerID) {
         return;
     }
     try {
-        const response = await fetch(`http://localhost:4000/customer/${customerID}`, {
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/customer/${customerID}`, {
             method: 'DELETE'
         });
         
@@ -85,7 +87,8 @@ document.getElementById('customerForm').addEventListener('submit', function(even
     };
 
     // Send data to the server
-    fetch('http://localhost:4000/customer', {
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+    fetch(`${API_BASE}/customer`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

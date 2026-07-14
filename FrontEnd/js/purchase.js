@@ -1,7 +1,9 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+
 window.onload = async function() {
     try {
         const sID = localStorage.getItem('sID') || '1';
-        const response = await fetch(`http://localhost:4000/purchaseOrder/${sID}`);
+        const response = await fetch(`${API_BASE}/purchaseOrder/${sID}`);
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
@@ -42,7 +44,7 @@ async function removeProduct(customerID, bname, bcity, item) {
         return;
     }
     try {
-        const response = await fetch(`http://localhost:4000/purchaseOrder/${customerID}/${bname}/${bcity}/${item}`, {
+        const response = await fetch(`${API_BASE}/purchaseOrder/${customerID}/${bname}/${bcity}/${item}`, {
             method: 'DELETE'
         });
         
@@ -62,7 +64,7 @@ async function removeProduct(customerID, bname, bcity, item) {
 
 async function markComplete(customerID, bname, bcity, item, category, price, quantity) {
     try {
-        const response = await fetch(`http://localhost:4000/purchaseOrder/${customerID}/${bname}/${bcity}/${item}`, {
+        const response = await fetch(`${API_BASE}/purchaseOrder/${customerID}/${bname}/${bcity}/${item}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -100,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         try {
             const sID = localStorage.getItem('sID') || '1';
             // Fetch customer names
-            const customersResponse = await fetch(`http://localhost:4000/customerList/${sID}`);
+            const customersResponse = await fetch(`${API_BASE}/customerList/${sID}`);
             const customersData = await customersResponse.json();
             customersData.forEach(customer => {
                 const option = document.createElement('option');
@@ -108,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 customerSelect.appendChild(option);
             });
             //Fetch brands
-            const brandsResponse = await fetch(`http://localhost:4000/brandsList/${sID}`);
+            const brandsResponse = await fetch(`${API_BASE}/brandsList/${sID}`);
             const brandsData = await brandsResponse.json();
             brandsData.forEach(brand => {
                 const option = document.createElement('option');
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 try {
                     // Fetch cities based on the selected brand
-                    const citiesResponse = await fetch(`http://localhost:4000/citiesList?brand=${selectedBrand}`);
+                    const citiesResponse = await fetch(`${API_BASE}/citiesList?brand=${selectedBrand}`);
                     const citiesData = await citiesResponse.json();
 
                     // Clear previous options
@@ -137,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
                     // Fetch items based on the selected brand
-                    const itemsResponse = await fetch(`http://localhost:4000/items?brand=${selectedBrand}`);
+                    const itemsResponse = await fetch(`${API_BASE}/items?brand=${selectedBrand}`);
                     if (!itemsResponse.ok) {
                         throw new Error('Failed to fetch items');
                     }
@@ -166,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 try {
                     // Fetch category based on the selected brand
-                    const categoryResponse = await fetch(`http://localhost:4000/categoryList?item=${selectedItem}`);
+                    const categoryResponse = await fetch(`${API_BASE}/categoryList?item=${selectedItem}`);
                     const categoryData = await categoryResponse.json();
 
                     // Clear previous options
@@ -180,7 +182,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     });
 
                     // Fetch category based on the selected brand
-                    const priceResponse = await fetch(`http://localhost:4000/priceData?item=${selectedItem}`);
+                    const priceResponse = await fetch(`${API_BASE}/priceData?item=${selectedItem}`);
                     const priceData = await priceResponse.json();
 
                     // Clear previous options
@@ -249,7 +251,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     
         // Send data to the server
         try {
-            const response = await fetch('http://localhost:4000/purchaseOrder', {
+            const response = await fetch(`${API_BASE}/purchaseOrder`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

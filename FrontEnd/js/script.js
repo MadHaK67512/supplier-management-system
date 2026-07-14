@@ -30,7 +30,8 @@ if (isDarkMode) {
 const initDashboard = async () => {
     try {
         const sID = localStorage.getItem('sID') || '1';
-        const response = await fetch(`http://localhost:4000/purchaseOrder/${sID}`);
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/purchaseOrder/${sID}`);
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }

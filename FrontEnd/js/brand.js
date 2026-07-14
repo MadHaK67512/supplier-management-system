@@ -1,6 +1,7 @@
 window.onload = async function() {
     try {
-        const response = await fetch('http://localhost:4000/brands');
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/brands`);
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
@@ -29,7 +30,8 @@ window.onload = async function() {
 async function addBrand(bname, bcity) {
     try {
         const sId = localStorage.getItem('sID') || '1';
-        const response = await fetch('http://localhost:4000/linkedbrand', {
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/linkedbrand`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

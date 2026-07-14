@@ -12,7 +12,17 @@ app.use(cors()); // Enable CORS
 
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('postgres://postgres:67512kings@localhost:5432/SupplierManagementDB');
+const databaseUrl = process.env.DATABASE_URL || 'postgres://postgres:67512kings@localhost:5432/SupplierManagementDB';
+
+const sequelize = new Sequelize(databaseUrl, {
+    dialect: 'postgres',
+    dialectOptions: databaseUrl.includes('localhost') ? {} : {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
+});
 async function connectionDB() {
     try {
         await sequelize.authenticate();
@@ -582,3 +592,5 @@ app.post('/api/login', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
+
+module.exports = app;

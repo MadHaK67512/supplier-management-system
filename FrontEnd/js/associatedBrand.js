@@ -1,7 +1,8 @@
 window.onload = async function() {
     try {
         const sID = localStorage.getItem('sID') || '1';
-        const response = await fetch(`http://localhost:4000/linkedBrand/${sID}`);
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/linkedBrand/${sID}`);
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
@@ -29,7 +30,8 @@ async function removeBrand(sID,bname, bcity) {
         return;
     }
     try {
-        const response = await fetch(`http://localhost:4000/linkedBrand/${sID}/${bname}/${bcity}`, {
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+        const response = await fetch(`${API_BASE}/linkedBrand/${sID}/${bname}/${bcity}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://localhost:4000/api/login', {
+            const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:4000' : '';
+            const response = await fetch(`${API_BASE}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

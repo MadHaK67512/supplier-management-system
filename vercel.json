@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "WebServer/app.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "FrontEnd/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(api|customer|linkedBrand|supplierStock|purchaseOrder|customerList|brandsList|citiesList|items|categoryList|priceData|brandStock|linkedbrand)(.*)",
+      "dest": "WebServer/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "FrontEnd/$1"
+    }
+  ]
+}
