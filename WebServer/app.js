@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const crypto = require('crypto');
+const pg = require('pg'); // Explicitly import pg for Vercel serverless bundler
 
 const app = express();
 
