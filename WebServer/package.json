@@ -12,8 +12,7 @@
     "express": "^4.19.2",
     "morgan": "^1.10.0",
     "pg": "^8.11.5",
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "sequelize": "^6.37.3"
   },
   "keywords": [],
   "description": ""
